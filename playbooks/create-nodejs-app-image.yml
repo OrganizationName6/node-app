@@ -1,0 +1,17 @@
+---
+- hosts: jenkins-server
+  become: true
+
+  tasks:
+  - name: create docker image
+    command: docker build -t cyrustheone/nodejs-app:latest .
+
+  - name: login to docker hub
+    command: docker login -u cyrustheone -p docker_hub_credentials
+
+  - name: push image on to dockerhub
+    command: docker push cyrustheone/nodejs-app:latest
+
+  - name: remove docker image form jenkins server
+    command: docker rmi cyrustheone/nodejs-app:latest
+    ignore_errors: yes

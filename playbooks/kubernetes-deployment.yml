@@ -1,0 +1,9 @@
+---
+- name: Create pods using deployment 
+  hosts: kubernetes 
+  # become: true
+  user: ubuntu
+ 
+  tasks: 
+  - name: create deployment
+    command: kubectl apply -f deployment.yml
