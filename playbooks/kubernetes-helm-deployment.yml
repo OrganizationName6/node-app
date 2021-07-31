@@ -6,4 +6,4 @@
  
   tasks: 
   - name: deploy application via Helm chart
-    command: helm install sample-nodejs-app ./nodejs-app-helm/ --set service.type=NodePort
+    command: helm install sample-nodejs-app ./nodejs-app-helm/
