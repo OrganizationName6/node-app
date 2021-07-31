@@ -5,5 +5,5 @@
   user: ubuntu
  
   tasks: 
-  - name: create deployment
-    command: kubectl apply -f deployment.yml
+  - name: deploy application via Helm chart
+    command: helm install sample-nodejs-app ./nodejs-app-helm/ --set service.type=NodePort
