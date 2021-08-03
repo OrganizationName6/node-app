@@ -2,6 +2,18 @@ provider "aws" {
 
 }
 
+module "aws-s3" {
+  source = "./modules/s3"
+}
+
+module "aws-dynamodb" {
+  source = "./modules/dynamodb"
+}
+
+module "aws-terraform-backend" {
+  source = "./modules/tfbackend"
+}
+
 resource "aws_vpc" "default" {
   cidr_block = var.vpc_cidr
   enable_dns_hostnames = true
