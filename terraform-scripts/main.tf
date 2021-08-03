@@ -6,23 +6,35 @@ module "aws-s3" {
   source = "./modules/s3"
 }
 
-module "aws-dynamodb" {
-  source = "./modules/dynamoDB"
+resource "aws_dynamodb_table" "terraform_locks" {
+  hash_key = "LockID"
+  name = "terraform-test-locks"
+  billing_mode = "PAY_PER_REQUEST"
+  attribute {
+    name = "LockID"
+    type = "S"
+  }
 }
 
-module "terraform-backend" {
-  source = "./modules/terraform_backend"
+terraform {
+  backend "s3" {
+    bucket = "nodejs-app-bucket"
+    key = "terraform.tfstate"
+    region = "ap-south-1"
+    dynamodb_table = "terraform-test-locks"
+    encrypt = true
+  }
 }
 
 resource "aws_vpc" "default" {
-  cidr_block = var.vpc_cidr
+  cidr_block = "10.0.0.0/16"
   enable_dns_hostnames = true
 }
 
 resource "aws_subnet" "public-subnet" {
   vpc_id = "${aws_vpc.default.id}"
-  cidr_block = var.subnet_cidr
-  availability_zone = var.subnet_availability_zone
+  cidr_block = "10.0.1.0/24"
+  availability_zone = "ap-south-1a"
 
 }
 
@@ -69,26 +81,13 @@ resource "aws_security_group" "sample_security_group" {
 
 }
 
-resource "aws_instance" "master__instance" {
-        count = var.master_instance_count
-        ami = var.ec2_ami
-        instance_type = var.ec2_instance_master
+resource "aws_instance" "aws_ec2_instance" {
+        ami = "ami-0c1a7f89451184c8b"
+        instance_type = "t2.micro"
         subnet_id = "${aws_subnet.public-subnet.id}"
         vpc_security_group_ids = ["${aws_security_group.sample_security_group.id}"]
-        key_name = var.pem_file_name
+        key_name = "mumbailaptop2"
         tags = {
-          Name = "Terraform-K8-Master-Server"
-        }
-}
-
-resource "aws_instance" "worker_instance" {
-        count = var.worker_instance_count
-        ami = var.ec2_ami
-        instance_type = var.ec2_instance_worker
-        subnet_id = "${aws_subnet.public-subnet.id}"
-        vpc_security_group_ids = ["${aws_security_group.sample_security_group.id}"]
-        key_name = var.pem_file_name
-        tags = {
-          Name = "Terraform-K8-Worker-Server"
+          Name = "Ubuntu Server by Terraform"
         }
 }
