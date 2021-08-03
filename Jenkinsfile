@@ -46,6 +46,7 @@ pipeline{
         stage('Execute Ansible Playbook'){
             steps{
                 ansiblePlaybook credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'ansibledeploy', inventory: 'playbooks/hosts', playbook: 'playbooks/kubernetes-helm-deployment.yml'
+                ansiblePlaybook credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'ansibledeploy', inventory: 'playbooks/hosts', playbook: 'playbooks/kubernetes-monitoring-deployment.yml'
             }
         }
     }
