@@ -2,39 +2,15 @@ provider "aws" {
 
 }
 
-module "aws-s3" {
-  source = "./modules/s3"
-}
-
-resource "aws_dynamodb_table" "terraform_locks" {
-  hash_key = "LockID"
-  name = "terraform-test-locks"
-  billing_mode = "PAY_PER_REQUEST"
-  attribute {
-    name = "LockID"
-    type = "S"
-  }
-}
-
-terraform {
-  backend "s3" {
-    bucket = "nodejs-app-bucket"
-    key = "terraform.tfstate"
-    region = "ap-south-1"
-    dynamodb_table = "terraform-test-locks"
-    encrypt = true
-  }
-}
-
 resource "aws_vpc" "default" {
-  cidr_block = "10.0.0.0/16"
+  cidr_block = var.vpc_cidr
   enable_dns_hostnames = true
 }
 
 resource "aws_subnet" "public-subnet" {
   vpc_id = "${aws_vpc.default.id}"
-  cidr_block = "10.0.1.0/24"
-  availability_zone = "ap-south-1a"
+  cidr_block = var.subnet_cidr
+  availability_zone = var.subnet_availability_zone
 
 }
 
@@ -81,13 +57,27 @@ resource "aws_security_group" "sample_security_group" {
 
 }
 
-resource "aws_instance" "aws_ec2_instance" {
-        ami = "ami-0c1a7f89451184c8b"
-        instance_type = "t2.micro"
+resource "aws_instance" "ec2_master_instance" {
+        count = var.master_instance_count
+        ami = var.ec2_ami
+        instance_type = var.master_instance_type
         subnet_id = "${aws_subnet.public-subnet.id}"
         vpc_security_group_ids = ["${aws_security_group.sample_security_group.id}"]
-        key_name = "mumbailaptop2"
+        key_name = var.pem_file_name
         tags = {
-          Name = "Ubuntu Server by Terraform"
+          Name = var.master_instance_name
         }
 }
+
+resource "aws_instance" "ec2_worker_instance" {
+        count = var.worker_instance_count
+        ami = var.ec2_ami
+        instance_type = var.worker_instance_type
+        subnet_id = "${aws_subnet.public-subnet.id}"
+        vpc_security_group_ids = ["${aws_security_group.sample_security_group.id}"]
+        key_name = var.pem_file_name
+        tags = {
+          Name = var.worker_instance_name
+        }
+}
+
