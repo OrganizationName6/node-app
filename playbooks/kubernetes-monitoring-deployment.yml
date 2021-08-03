@@ -1,0 +1,11 @@
+---
+- name: Prometheus and Grafana deployment
+  hosts: kubernetes
+  # become: true
+  user: ubuntu
+
+  tasks:
+  - name: deploy prometheus
+    command: kubectl apply -f prometheus-grafana/prometheus/
+  - name: deploy grafana
+    command: kubectl apply -f prometheus-grafana/grafana/
