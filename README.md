@@ -4,7 +4,7 @@ This repository provides information on how to set up a CI/CD workflow of a Node
 
 ## Table of Contents
 * Prerequisites
-* Architecture and Workflow
+* Application Set-up Workflow
 * File Structure
 
 
@@ -20,7 +20,7 @@ This repository provides information on how to set up a CI/CD workflow of a Node
 
 ![image](https://user-images.githubusercontent.com/73691007/128066213-79e4754e-aca6-44d6-868c-2e8250450111.png)
 
-## Architecture and Workflow
+## Application Set-up Workflow
 ![image](https://user-images.githubusercontent.com/73691007/128065042-48bf0510-8b9d-47e7-b16c-42ea93eb4a7e.png)
 
 ## Step 1 — Setting up Jenkins server
