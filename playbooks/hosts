@@ -11,7 +11,7 @@
 # Ex 1: Ungrouped hosts, specify before any group headers.
 
 [kubernetes]
-65.2.78.102
+3.7.69.14
 
 #green.example.com
 #blue.example.com
