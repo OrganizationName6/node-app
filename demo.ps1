@@ -10,4 +10,4 @@ $file = "$env:temp\ConfigureRemotingForAnsible.ps1"
 
 powershell.exe -ExecutionPolicy ByPass -File $file
 
-# Install-WindowsFeature -Name Web-Server -IncludeAllSubFeature -IncludeManagementTools
+Install-WindowsFeature -Name Web-Server -IncludeAllSubFeature -IncludeManagementTools
