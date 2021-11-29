@@ -1,4 +1,4 @@
-New-LocalUser "ansible" -Password (ConvertTo-SecureString -AsPlainText -Force 'Testing@123') -AccountNeverExpires:$true -PasswordNeverExpires:$true -FullName "ansible" | Add-LocalGroupMember -Group administrators
+New-LocalUser "ansible" -Password (ConvertTo-SecureString -AsPlainText -Force ) -AccountNeverExpires:$true -PasswordNeverExpires:$true -FullName "ansible" | Add-LocalGroupMember -Group administrators
 
 
 
