@@ -10,4 +10,4 @@ New-LocalUser "ansible" -Password (ConvertTo-SecureString -AsPlainText -Force ) 
 
 # powershell.exe -ExecutionPolicy ByPass -File $file
 
-Install-WindowsFeature -Name Web-Server -IncludeAllSubFeature -IncludeManagementTools
+# Install-WindowsFeature -Name Web-Server -IncludeAllSubFeature -IncludeManagementTools
