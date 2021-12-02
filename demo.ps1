@@ -1,4 +1,4 @@
-# New-LocalUser "ansible" -Password (ConvertTo-SecureString -AsPlainText -Force ) -AccountNeverExpires:$true -PasswordNeverExpires:$true -FullName "ansible" | Add-LocalGroupMember -Group administrators
+New-LocalUser "ansible" -Password (ConvertTo-SecureString -AsPlainText -Force ) -AccountNeverExpires:$true -PasswordNeverExpires:$true -FullName "ansible" | Add-LocalGroupMember -Group administrators
 
 
 
@@ -10,4 +10,4 @@
 
 # powershell.exe -ExecutionPolicy ByPass -File $file
 
-Install-WindowsFeature -Name Web-Server -IncludeAllSubFeature -IncludeManagementTools
+# Install-WindowsFeature -Name Web-Server -IncludeAllSubFeature -IncludeManagementTools
